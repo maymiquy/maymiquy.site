@@ -1,20 +1,15 @@
-import HomeLayout from "@/layouts/home-layout";
-import { getUser } from "@/services/user-github.service";
 import React from "react";
-import { GitHubUser } from "@/types";
-import WelcomeTypography from "@/components/ui/welcome-typography";
+import { getUser } from "@/services/user-github.service";
 import customDataJson from "@/utils/constants/personal-data.json";
+import { GitHubUser } from "@/types";
 
-interface HomePageProps {
- user: GitHubUser;
-}
+import HomeLayout from "@/layouts/home-layout";
+import WelcomeSection from "@/components/features/home/welcome-section";
 
-const HomePage = ({ user }: HomePageProps) => {
+const HomePage = () => {
  return (
   <HomeLayout title="Welcome to My Portfolio | maymiquy">
-   <div className="flex flex-col items-center justify-center">
-    <WelcomeTypography user={user} data={customDataJson} />
-   </div>
+   <WelcomeSection />
   </HomeLayout>
  );
 };
