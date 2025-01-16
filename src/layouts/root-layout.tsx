@@ -1,11 +1,5 @@
 import React, { FC, ReactNode } from "react";
 import Head from "next/head";
-import LocalFont from "next/font/local";
-
-const calSans = LocalFont({
- src: "../../public/fonts/CalSans-SemiBold.ttf",
- variable: "--font-calsans",
-});
 
 interface RootLayoutProps {
  children: ReactNode;
@@ -25,7 +19,7 @@ const RootLayout: FC<RootLayoutProps> = ({
     <link rel="icon" href="/favicon.png" />
    </Head>
 
-   <main className={calSans.className}>{children}</main>
+   <>{children}</>
   </>
  );
 };

@@ -22,7 +22,7 @@ export default function WelcomeNavigation(props: WelcomeNavigationProps) {
         <Link
          key={i}
          href={item.href}
-         className="text-md sm:text-lg duration-500 text-zinc-500 hover:text-zinc-300 border-dashed hover:border-solid p-2 rounded border-2 border-zinc-500 hover:border-zinc-300"
+         className="text-md sm:text-lg font-display duration-500 text-zinc-500 hover:text-zinc-300 border-dashed hover:border-solid p-2 rounded border-2 border-zinc-500 hover:border-zinc-300"
         >
          {item.title}
         </Link>

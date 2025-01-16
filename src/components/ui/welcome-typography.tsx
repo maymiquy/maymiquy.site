@@ -11,8 +11,8 @@ const WelcomeTypography = () => {
    <p className="block md:hidden text-sm font-bold cursor-default">
     Hello, I'm{" "}
    </p>
-   <p className="hidden md:block text-md font-bold cursor-default">A.K.A</p>
-   <p className="font-bold text-xl sm:text-3xl cursor-default">
+   <p className="hidden md:block text-md font-display cursor-default">A.K.A</p>
+   <p className="font-display text-xl sm:text-3xl cursor-default">
     <BounceOnload>{user?.name || personalDataJson.displayName}</BounceOnload>
    </p>
    <p className="text-sm sm:text-md md:text-lg text-zinc-300 font-sans mt-2 cursor-default">
