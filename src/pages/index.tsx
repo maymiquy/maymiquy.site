@@ -2,13 +2,16 @@ import React from "react";
 import { getUser } from "@/services/user-github.service";
 import customDataJson from "@/utils/constants/personal-data.json";
 import { GitHubUser } from "@/types";
+import { menu } from "@/utils/constants/menu";
 
 import HomeLayout from "@/layouts/home-layout";
 import WelcomeSection from "@/components/features/home/welcome-section";
+import WelcomeNavigation from "@/components/features/home/welcome-navigation";
 
 const HomePage = () => {
  return (
-  <HomeLayout title="Welcome to My Portfolio | maymiquy">
+  <HomeLayout>
+   <WelcomeNavigation menu={menu} />
    <WelcomeSection />
   </HomeLayout>
  );
