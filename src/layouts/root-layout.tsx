@@ -22,7 +22,7 @@ const RootLayout: FC<RootLayoutProps> = ({
     <title>{title}</title>
     <meta name="description" content="My personal portfolio website" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href="/favicon.png" />
    </Head>
 
    <main className={calSans.className}>{children}</main>
