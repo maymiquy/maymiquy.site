@@ -11,7 +11,7 @@ const WelcomeSection = () => {
   personalDataJson.githubUsername.split("") || user?.login.split("");
 
  return (
-  <>
+  <section>
    <div className="hidden w-screen h-px animate-glow md:block animate-fade-left bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
    <div className="max-h-fit z-10 animate-title duration-1000 md:overflow-hidden flex flex-row justify-center">
     <h1 className="md:flex items-center hidden bg-gradient-to-r from-zinc-400 to-zinc-100 hover:from-zinc-600 hover:to-zinc-300 text-transparent bg-clip-text cursor-default text-edge-outline font-display text-7xl md:text-9xl whitespace-nowrap">
@@ -39,7 +39,7 @@ const WelcomeSection = () => {
      <WelcomeTypography />
     </h1>
    </div>
-  </>
+  </section>
  );
 };
 
