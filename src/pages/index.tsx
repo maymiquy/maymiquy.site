@@ -4,8 +4,7 @@ import customDataJson from "@/utils/constants/personal-data.json";
 import { menu } from "@/utils/constants/menu";
 
 import HomeLayout from "@/layouts/home-layout";
-import WelcomeSection from "@/components/features/home/welcome-section";
-import WelcomeNavigation from "@/components/features/home/welcome-navigation";
+import { WelcomeNavigation, WelcomeSection } from "@/components/features/home";
 
 const HomePage = () => {
  return (

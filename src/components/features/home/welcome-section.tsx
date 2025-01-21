@@ -1,9 +1,14 @@
 import React from "react";
-import { AnimationBounce, BounceOnload } from "@/components/ui/animation";
-import WelcomeTypography from "@/components/ui/welcome-typography";
+import Image from "next/image";
+
 import { useGithub } from "@/hooks/use-github";
 import personalDataJson from "@/utils/constants/personal-data.json";
-import Image from "next/image";
+
+import {
+ AnimationBounce,
+ BounceOnload,
+ WelcomeTypography,
+} from "@/components/ui";
 
 const WelcomeSection = () => {
  const { user } = useGithub();

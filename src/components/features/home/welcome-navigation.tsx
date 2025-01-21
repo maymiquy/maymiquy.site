@@ -1,6 +1,6 @@
 import * as React from "react";
-import { BounceOnload, HeartBeat } from "@/components/ui/animation";
 import Link from "next/link";
+import { BounceOnload, HeartBeat } from "@/components/ui";
 
 type MenuItem = {
  title: string;
