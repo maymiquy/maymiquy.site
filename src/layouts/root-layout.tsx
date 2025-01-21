@@ -1,12 +1,25 @@
-import React, { FC, ReactNode } from "react";
+import React from "react";
 import Head from "next/head";
 
+import localFont from "next/font/local";
+import { Inter } from "next/font/google";
+
+const calSans = localFont({
+ src: "../../public/fonts/CalSans-SemiBold.ttf",
+ variable: "--font-calsans",
+});
+
+const inter = Inter({
+ subsets: ["latin"],
+ variable: "--font-inter",
+});
+
 interface RootLayoutProps {
- children: ReactNode;
+ children: React.ReactNode;
  title?: string;
 }
 
-const RootLayout: FC<RootLayoutProps> = ({
+const RootLayout: React.FC<RootLayoutProps> = ({
  children,
  title = "My Portfolio",
 }) => {
@@ -19,7 +32,16 @@ const RootLayout: FC<RootLayoutProps> = ({
     <link rel="icon" href="/favicon.png" />
    </Head>
 
-   <>{children}</>
+   <main
+    className={[
+     calSans.className,
+     inter.className,
+     calSans.variable,
+     inter.variable,
+    ].join(" ")}
+   >
+    {children}
+   </main>
   </>
  );
 };

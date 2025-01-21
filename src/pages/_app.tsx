@@ -1,6 +1,4 @@
 import React from "react";
-import LocalFont from "next/font/local";
-import { Inter } from "next/font/google";
 
 import type { AppProps } from "next/app";
 
@@ -9,16 +7,6 @@ import NextTopLoader from "nextjs-toploader";
 
 import { GithubProvider } from "@/context/github-context";
 import { NextUIProvider } from "@nextui-org/system";
-
-const calSans = LocalFont({
- src: "../../public/fonts/CalSans-SemiBold.ttf",
- variable: "--font-calsans",
-});
-
-const inter = Inter({
- subsets: ["latin"],
- variable: "--font-inter",
-});
 
 export default function App({ Component, pageProps }: AppProps) {
  return (
@@ -35,16 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
      speed={50}
      shadow="0 0 10px #ffff,0 0 5px #ffff"
     />
-    <main
-     className={[
-      calSans.className,
-      inter.className,
-      calSans.variable,
-      inter.variable,
-     ].join(" ")}
-    >
-     <Component {...pageProps} />
-    </main>
+    <Component {...pageProps} />
    </NextUIProvider>
   </GithubProvider>
  );
