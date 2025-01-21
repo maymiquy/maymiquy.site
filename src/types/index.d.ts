@@ -1,4 +1,4 @@
-export interface GitHubUser {
+declare interface GitHubUser {
  avatar_url: string;
  bio: string;
  blog: string;
@@ -14,7 +14,7 @@ export interface GitHubUser {
  repos_url: string;
 }
 
-export interface CustomePersonalData {
+declare interface CustomePersonalData {
  avatarUrl: string;
  college: string;
  description: string;

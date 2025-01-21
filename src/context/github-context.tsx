@@ -1,4 +1,3 @@
-import { GitHubUser } from "@/types";
 import React from "react";
 
 type GithubContextType = {

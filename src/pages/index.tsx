@@ -1,7 +1,6 @@
 import React from "react";
 import { getUser } from "@/services/user-github.service";
 import customDataJson from "@/utils/constants/personal-data.json";
-import { GitHubUser } from "@/types";
 import { menu } from "@/utils/constants/menu";
 
 import HomeLayout from "@/layouts/home-layout";
