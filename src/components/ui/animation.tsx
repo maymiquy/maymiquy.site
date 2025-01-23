@@ -109,7 +109,9 @@ export const HeartBeat = ({ children }: AllAnimationComponentProps) => {
 
 export const Typewriter = () => {
  return (
-  <h1 className={`text-md md:text-xl xl:text-3xl text-zinc-100 font-bold`}>
+  <h3
+   className={`text-md md:text-xl xl:text-3xl text-zinc-100 font-bold cursor-default`}
+  >
    <TypeAnimation
     sequence={[
      "I'm a Full-stack developer",
@@ -124,6 +126,6 @@ export const Typewriter = () => {
     speed={50}
     repeat={Infinity}
    />
-  </h1>
+  </h3>
  );
 };
