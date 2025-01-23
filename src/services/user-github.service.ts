@@ -1,3 +1,4 @@
+import { env } from "@/config/env";
 import { unstable_cache } from "next/cache";
 
 interface PinnedRepoNode {
@@ -33,8 +34,8 @@ export async function getUser(username: string) {
  try {
   console.log("Fetching user data for", username);
   console.time("getUser");
-  const res = await fetch(`https://api.github.com/users/${username}`, {
-   headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
+  const res = await fetch(`${env.GITHUB_API}/users/${username}`, {
+   headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
    next: { revalidate },
   });
   const result = await res.json();
@@ -51,8 +52,8 @@ export async function getUser(username: string) {
 export async function getRepos(username: string) {
  console.log("Fetching repos for", username);
  console.time("getRepos");
- const res = await fetch(`https://api.github.com/users/${username}/repos`, {
-  headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
+ const res = await fetch(`${env.GITHUB_API}/users/${username}/repos`, {
+  headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
   next: { revalidate },
  });
  console.timeEnd("getRepos");
@@ -64,9 +65,9 @@ export async function getSocialAccounts(username: string) {
  console.log("Fetching social accounts for", username);
  console.time("getSocialAccounts");
  const res = await fetch(
-  `https://api.github.com/users/${username}/social_accounts`,
+  `${env.GITHUB_API}/users/${username}/social_accounts`,
   {
-   headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
+   headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
    next: { revalidate: MINUTES_5 },
   },
  );
@@ -79,9 +80,9 @@ export const getPinnedRepos = unstable_cache(
  async (username: string) => {
   console.log("Fetching pinned repos for", username);
   console.time("getPinnedRepos");
-  const res = await fetch("https://api.github.com/graphql", {
+  const res = await fetch(`${env.GITHUB_API}/graphql`, {
    method: "POST",
-   headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
+   headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
    body: JSON.stringify({
     query: `{user(login: "${username}") {pinnedItems(first: 6) {nodes {... on Repository {name}}}}}`,
    }),
@@ -99,9 +100,9 @@ export const getPinnedRepos = unstable_cache(
 export const getUserOrganizations = async (username: string) => {
  console.log("Fetching organizations for", username);
  console.time("getUserOrganizations");
- const res = await fetch("https://api.github.com/graphql", {
+ const res = await fetch(`${env.GITHUB_API}/graphql`, {
   method: "POST",
-  headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
+  headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
   body: JSON.stringify({
    query: `{user(login: "${username}") {organizations(first: 6) {nodes {name,websiteUrl,url,avatarUrl,description}}}}`,
   }),
@@ -113,14 +114,14 @@ export const getUserOrganizations = async (username: string) => {
 
 // Vercel API
 export const getVercelProjects = async () => {
- if (!process.env.VC_TOKEN) {
+ if (!env.VERCEL_TOKEN) {
   console.log("No Vercel token found - no projects will be shown.");
   return { projects: [] };
  }
  console.log("Fetching Vercel projects");
  console.time("getVercelProjects");
- const res = await fetch("https://api.vercel.com/v9/projects", {
-  headers: { Authorization: `Bearer ${process.env.VC_TOKEN}` },
+ const res = await fetch(`${env.VERCEL_PROJECT_API}`, {
+  headers: { Authorization: `Bearer ${env.VERCEL_TOKEN}` },
  });
  console.timeEnd("getVercelProjects");
  if (!res.ok) {
@@ -133,9 +134,9 @@ export const getVercelProjects = async () => {
 // Cache get repository package.json
 export const getRepositoryPackageJson = unstable_cache(
  async (username: string, reponame: string) => {
-  const res = await fetch("https://api.github.com/graphql", {
+  const res = await fetch(`${env.GITHUB_API}/graphq`, {
    method: "POST",
-   headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
+   headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
    body: JSON.stringify({
     query: `{
         repository(name: "${reponame}", owner: "${username}") {
@@ -166,8 +167,8 @@ export const getRecentUserActivity = unstable_cache(
  async (username: string) => {
   console.log("Fetching recent activity for", username);
   console.time("getRecentUserActivity");
-  const res = await fetch(`https://api.github.com/users/${username}/events`, {
-   headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
+  const res = await fetch(`${env.GITHUB_API}/users/${username}/events`, {
+   headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
   });
   const response = await res.json();
   console.timeEnd("getRecentUserActivity");
@@ -181,9 +182,9 @@ export const getRecentUserActivity = unstable_cache(
 export const getDependabotAlerts = unstable_cache(
  async (username: string, reponame: string) => {
   const res = await fetch(
-   `https://api.github.com/repos/${username}/${reponame}/dependabot/alerts`,
+   `${env.GITHUB_API}/repos/${username}/${reponame}/dependabot/alerts`,
    {
-    headers: { Authorization: `Bearer ${process.env.GH_TOKEN}` },
+    headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
    },
   );
   const response: DependabotAlertsResponse = await res.json();
