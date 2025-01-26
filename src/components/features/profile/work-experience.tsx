@@ -13,7 +13,7 @@ const WorkExperience = (props: WorkExperienceProps) => {
     lg:bg-zinc-900 
     space-y-4 bg-opacity-40 rounded-xl 
     lg:shadow-md py-4 px-6 relative
-    lg:w-full lg:max-w-full max-w-md
+    w-full lg:max-w-full max-w-md
      ${props.gridSystem}
     `}
   >
