@@ -2,7 +2,7 @@ import React from "react";
 import { getUser } from "@/services/user-github.service";
 import customDataJson from "@/utils/constants/personal-data.json";
 
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 
 import CommonLayout from "@/layouts/common-layout";
 import {
@@ -25,13 +25,12 @@ const ProfilePage = () => {
  );
 };
 
-export const getServerSideProps = (async () => {
- const user: GitHubUser = (await getUser(customDataJson.githubUsername)) || [];
- return {
-  props: {
-   user,
-  },
- };
-}) satisfies GetServerSideProps<{ user: GitHubUser }>;
-
 export default ProfilePage;
+
+export const getStaticProps = (async () => {
+ console.log("Revalidating data...");
+ const user: GitHubUser = (await getUser(customDataJson.githubUsername)) || [];
+ return { props: { user }, revalidate: 60 * 30 };
+}) satisfies GetStaticProps<{
+ user: GitHubUser;
+}>;
