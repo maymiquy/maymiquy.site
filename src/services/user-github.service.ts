@@ -1,5 +1,4 @@
 import { env } from "@/config/env";
-import { unstable_cache } from "next/cache";
 
 interface PinnedRepoNode {
  name: string;
@@ -76,25 +75,22 @@ export async function getSocialAccounts(username: string) {
 }
 
 // Pinned repo API
-export const getPinnedRepos = unstable_cache(
- async (username: string) => {
-  console.log("Fetching pinned repos for", username);
-  console.time("getPinnedRepos");
-  const res = await fetch(`${env.GITHUB_API}/graphql`, {
-   method: "POST",
-   headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
-   body: JSON.stringify({
-    query: `{user(login: "${username}") {pinnedItems(first: 6) {nodes {... on Repository {name}}}}}`,
-   }),
-  });
-  const pinned: PinnedReposResponse = await res.json();
-  console.timeEnd("getPinnedRepos");
-  const names = pinned.data.user.pinnedItems.nodes.map((node) => node.name);
-  return names;
- },
- ["get-pinned-repos"],
- { revalidate: MINUTES_5 },
-);
+export async function getPinnedRepos(username: string) {
+ console.log("Fetching pinned repos for", username);
+ console.time("getPinnedRepos");
+ const res = await fetch(`${env.GITHUB_API}/graphql`, {
+  method: "POST",
+  headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
+  body: JSON.stringify({
+   query: `{user(login: "${username}") {pinnedItems(first: 6) {nodes {... on Repository {name}}}}}`,
+  }),
+  next: { revalidate: MINUTES_5 },
+ });
+ const pinned: PinnedReposResponse = await res.json();
+ console.timeEnd("getPinnedRepos");
+ const names = pinned.data.user.pinnedItems.nodes.map((node) => node.name);
+ return names;
+}
 
 // Organization API
 export const getUserOrganizations = async (username: string) => {
@@ -132,13 +128,15 @@ export const getVercelProjects = async () => {
 };
 
 // Cache get repository package.json
-export const getRepositoryPackageJson = unstable_cache(
- async (username: string, reponame: string) => {
-  const res = await fetch(`${env.GITHUB_API}/graphq`, {
-   method: "POST",
-   headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
-   body: JSON.stringify({
-    query: `{
+export async function getRepositoryPackageJson(
+ username: string,
+ reponame: string,
+) {
+ const res = await fetch(`${env.GITHUB_API}/graphql`, {
+  method: "POST",
+  headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
+  body: JSON.stringify({
+   query: `{
         repository(name: "${reponame}", owner: "${username}") {
           object(expression: "HEAD:package.json") {
             ... on Blob {
@@ -147,70 +145,63 @@ export const getRepositoryPackageJson = unstable_cache(
           }
         }
       }`,
-   }),
-  });
-  const response = await res.json();
-  try {
-   const packageJson = JSON.parse(response.data.repository.object.text);
-   return packageJson;
-  } catch (error) {
-   console.error("Error parsing package.json", error);
-   return {};
-  }
- },
- ["repository-package-json"],
- { revalidate: HOURS_1 },
-);
+  }),
+  next: { revalidate: HOURS_1 },
+ });
+ const response = await res.json();
+ try {
+  const packageJson = JSON.parse(response.data.repository.object.text);
+  return packageJson;
+ } catch (error) {
+  console.error("Error parsing package.json", error);
+  return {};
+ }
+}
 
 // Cache get recent user activity
-export const getRecentUserActivity = unstable_cache(
- async (username: string) => {
-  console.log("Fetching recent activity for", username);
-  console.time("getRecentUserActivity");
-  const res = await fetch(`${env.GITHUB_API}/users/${username}/events`, {
-   headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
-  });
-  const response = await res.json();
-  console.timeEnd("getRecentUserActivity");
-  return response;
- },
- ["recent-user-activity"],
- { revalidate: HOURS_1 },
-);
+export const getRecentUserActivity = async (username: string) => {
+ console.log("Fetching recent activity for", username);
+ console.time("getRecentUserActivity");
+ const res = await fetch(`${env.GITHUB_API}/users/${username}/events`, {
+  headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
+  next: { revalidate: HOURS_1 },
+ });
+ const response = await res.json();
+ console.timeEnd("getRecentUserActivity");
+ return response;
+};
 
 // Get dependabot alerts
-export const getDependabotAlerts = unstable_cache(
- async (username: string, reponame: string) => {
-  const res = await fetch(
-   `${env.GITHUB_API}/repos/${username}/${reponame}/dependabot/alerts`,
-   {
-    headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
-   },
-  );
-  const response: DependabotAlertsResponse = await res.json();
+export const getDependabotAlerts = async (
+ username: string,
+ reponame: string,
+) => {
+ const res = await fetch(
+  `${env.GITHUB_API}/repos/${username}/${reponame}/dependabot/alerts`,
+  {
+   headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
+   next: { revalidate: HOURS_12 },
+  },
+ );
+ const response: DependabotAlertsResponse = await res.json();
 
-  // If dependabot is not enabled, the response will be an object, not an array.
-  if (!Array.isArray(response)) {
-   return [];
-  }
-  const openAlertsBySeverity = response.reduce(
-   (acc: Record<string, number>, alert: DependabotAlert) => {
-    if (alert.state === "open") {
-     acc[alert.security_advisory.severity] = acc[
-      alert.security_advisory.severity
-     ]
-      ? acc[alert.security_advisory.severity] + 1
-      : 1;
-    }
-    return acc;
-   },
-   {},
-  );
+ // If dependabot is not enabled, the response will be an object, not an array.
+ if (!Array.isArray(response)) {
+  return [];
+ }
+ const openAlertsBySeverity = response.reduce(
+  (acc: Record<string, number>, alert: DependabotAlert) => {
+   if (alert.state === "open") {
+    acc[alert.security_advisory.severity] = acc[
+     alert.security_advisory.severity
+    ]
+     ? acc[alert.security_advisory.severity] + 1
+     : 1;
+   }
+   return acc;
+  },
+  {},
+ );
 
-  return openAlertsBySeverity;
- },
- ["dependabot-alerts"],
- {
-  revalidate: HOURS_12,
- },
-);
+ return openAlertsBySeverity;
+};

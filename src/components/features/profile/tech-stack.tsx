@@ -48,6 +48,7 @@ const TechStack = (props: TechStackProps) => {
          hover:text-zinc-100 hover:bg-zinc-700/50
      data-[state=active]:bg-zinc-700 
      data-[state=active]:text-white 
+     data-[state=active]:font-semibold 
      data-[state=active]:scale-105
      data-[state=inactive]:text-zinc-400
      "
