@@ -9,7 +9,10 @@ import { GithubProvider } from "@/context/github-context";
 
 export default function App({ Component, pageProps }: AppProps) {
  return (
-  <GithubProvider user={pageProps.user}>
+  <GithubProvider
+   user={pageProps.user}
+   recentUserActivity={pageProps.recentUserActivity}
+  >
    <NextTopLoader
     color="#ffff"
     initialPosition={0.08}
