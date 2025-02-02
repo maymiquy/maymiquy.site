@@ -110,7 +110,7 @@ export const HeartBeat = ({ children }: AllAnimationComponentProps) => {
 export const Typewriter = () => {
  return (
   <h3
-   className={`text-md md:text-xl xl:text-3xl text-zinc-100 font-bold cursor-default`}
+   className={`text-md md:text-xl xl:text-2xl text-zinc-100 font-bold cursor-default`}
   >
    <TypeAnimation
     sequence={[

@@ -26,7 +26,7 @@ const HeroProfile = (props: HeroProfileProps) => {
     `}
   >
    <div className="w-full text-center lg:text-start mx-auto lg:mx-0 cursor-pointer">
-    <div className="text-xl lg:text-xl xl:text-3xl text-edge-outline font-display">
+    <div className="text-xl lg:text-xl xl:text-2xl text-edge-outline font-display">
      <h2>
       {sentence.map((word, index) => (
        <BounceOnload key={`WS1x-${index}`}>
@@ -39,7 +39,7 @@ const HeroProfile = (props: HeroProfileProps) => {
     <div
      className={`inline-block ${
       name.length > 14
-       ? "text-lg md:text-2xl xl:text-4xl"
+       ? "text-lg md:text-2xl xl:text-4xl xl:-tracking-wide"
        : "text-2xl md:text-4xl xl:text-6xl"
      } font-bold text-edge-outline font-display whitespace-nowrap`}
     >

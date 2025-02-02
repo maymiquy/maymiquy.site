@@ -27,9 +27,9 @@ const TechStack = (props: TechStackProps) => {
   >
    <div>
     <h3 className="text-md xl:text-lg text-center text-zinc-100 font-display">
-     Technologies Use
+     Technologies Stack
     </h3>
-    <p className="text-center font-sans text-xs lg:text-[11px] xl:text-sm text-zinc-300/70">
+    <p className="text-center font-sans text-xs lg:text-[11px] xl:text-xs text-zinc-300/70">
      Here are some of the technologies that I have used in my projects.
     </p>
    </div>
