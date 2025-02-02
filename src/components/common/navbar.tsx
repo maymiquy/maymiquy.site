@@ -36,7 +36,7 @@ const Navbar = (props: NavbarProps) => {
      isIntersecting ? "bg-zinc-900/0 border-transparent" : "border-zinc-800"
     }`}
    >
-    <div className="container flex flex-row-reverse items-center justify-between py-6 px-8 mx-auto">
+    <div className="container flex flex-row-reverse items-center justify-between py-6 px-8 lg:px-4 xl:px-12 mx-auto">
      <div className="flex justify-between gap-8 text-base font-display">
       {props.menu.map((item, index) => (
        <Link
