@@ -29,7 +29,7 @@ const TechStack = (props: TechStackProps) => {
     <h3 className="text-md xl:text-lg text-center text-zinc-100 font-display">
      Technologies Use
     </h3>
-    <p className="text-center font-sans text-xs xl:text-sm text-zinc-300/70">
+    <p className="text-center font-sans text-xs lg:text-[11px] xl:text-sm text-zinc-300/70">
      Here are some of the technologies that I have used in my projects.
     </p>
    </div>
@@ -43,7 +43,7 @@ const TechStack = (props: TechStackProps) => {
           key={index}
           value={item.category}
           className="
-         rounded-md text-xs md:text-sm lg:text-xs xl:text-sm font-medium 
+         rounded-md text-xs md:text-sm lg:text-[10px] xl:text-sm font-medium 
          transition-all duration-300 ease-linear
          hover:text-zinc-100 hover:bg-zinc-700/50
      data-[state=active]:bg-zinc-700 
@@ -82,9 +82,9 @@ const TechStack = (props: TechStackProps) => {
             key={index}
             className="group flex flex-col items-center gap-2 transition-all hover:-translate-y-1"
            >
-            <span className="flex flex-col justify-center items-center w-12 h-12 md:w-16 md:h-16 py-1.5 gap-2 rounded-lg bg-zinc-800/50 group-hover:bg-zinc-700/50">
+            <span className="flex flex-col justify-center items-center w-12 h-12 md:w-16 md:h-16 lg:w-14 lg:h-14 xl:w-16 xl:h-16 py-1.5 gap-2 rounded-lg bg-zinc-800/50 group-hover:bg-zinc-700/50">
              <value.icon color={value.color} />
-             <p className="text-zinc-400 text-[8px] md:text-[11px] text-nowrap -tracking-widest font-medium group-hover:text-zinc-200">
+             <p className="text-zinc-400 text-[8px] md:text-[10px] lg:text-[9px] xl:text-[11px] text-nowrap -tracking-widest font-medium group-hover:text-zinc-200">
               {value.name}
              </p>
             </span>
