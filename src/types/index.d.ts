@@ -26,3 +26,51 @@ declare interface CustomePersonalData {
   heroNames: string[];
  };
 }
+
+declare interface RecentUserActivity {
+ reduce<T extends ActivitySummary>(
+  arg0: (acc: T, activity?: RecentUserActivity) => T,
+  arg1: T,
+ ): T;
+ id: string;
+ type: string;
+ actor: {
+  id: number;
+  login: string;
+  display_login: string;
+  gravatar_id: string;
+  url: string;
+  avatar_url: string;
+ };
+ repo: {
+  id: number;
+  name: string;
+  url: string;
+ };
+ payload: {
+  repository_id: number;
+  push_id: number;
+  size: number;
+  distinct_size: number;
+  ref: string;
+  ref_type: string;
+  head: string;
+  before: string;
+  pull_request: {
+   merged: boolean;
+  };
+  action: string;
+  commits: Array<{
+   author: {
+    email: string;
+    name: string;
+   };
+   distinct: boolean;
+   message: string;
+   sha: string;
+   url: string;
+  }>;
+ };
+ public: boolean;
+ created_at: string;
+}
