@@ -13,9 +13,11 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     rules: {
-      "no-unused-vars": "warn",
+      "no-unused-vars": "error",
       "semi": ["error", "always"],
       "no-empty-object-type": "off",
+      "react/no-children-prop": "off",
+      "react-hooks/exhaustive-deps": "off",
     },
   },
 ];
