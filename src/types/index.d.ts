@@ -28,10 +28,6 @@ declare interface CustomePersonalData {
 }
 
 declare interface RecentUserActivity {
- reduce<T extends ActivitySummary>(
-  arg0: (acc: T, activity?: RecentUserActivity) => T,
-  arg1: T,
- ): T;
  id: string;
  type: string;
  actor: {

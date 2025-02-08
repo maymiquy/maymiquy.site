@@ -1,5 +1,4 @@
 import { useGithub } from "@/hooks/use-github";
-import React from "react";
 
 type RecentActivityProps = {
  className: string;
@@ -20,40 +19,44 @@ type ActivitySummary = {
 const RecentActivity = (props: RecentActivityProps) => {
  const { recentUserActivity } = useGithub();
 
- const activitySummary = recentUserActivity.reduce(
-  (acc: ActivitySummary, activity) => {
+ const activitySummary = recentUserActivity.reduce<ActivitySummary>(
+  (acc, activity) => {
    switch (activity?.type) {
     case "PushEvent":
-     acc.commits = (acc.commits || 0) + activity?.payload.size;
+     acc.commits = (acc.commits || 0) + (activity?.payload.size || 0);
      break;
     case "PullRequestReviewEvent":
      acc.reviews = (acc.reviews || 0) + 1;
      break;
     case "IssueCommentEvent":
-     acc.commentsCreated = acc.commentsCreated || 0;
-     acc.commentsCreated += activity?.payload.action === "created" ? 1 : 0;
-     acc.commentsEdited = acc.commentsEdited || 0;
-     acc.commentsEdited += activity?.payload.action === "edited" ? 1 : 0;
+     acc.commentsCreated =
+      (acc.commentsCreated || 0) +
+      (activity?.payload.action === "created" ? 1 : 0);
+     acc.commentsEdited =
+      (acc.commentsEdited || 0) +
+      (activity?.payload.action === "edited" ? 1 : 0);
      break;
     case "PullRequestEvent":
-     acc.prsOpened = acc.prsOpened || 0;
-     acc.prsOpened += activity?.payload.action === "opened" ? 1 : 0;
-     acc.prsMerged = acc.prsMerged || 0;
-     acc.prsMerged +=
-      activity?.payload.action === "closed" &&
-      activity?.payload.pull_request.merged
+     acc.prsOpened =
+      (acc.prsOpened || 0) + (activity?.payload.action === "opened" ? 1 : 0);
+     acc.prsMerged =
+      (acc.prsMerged || 0) +
+      (activity?.payload.action === "closed" &&
+      activity?.payload.pull_request?.merged
        ? 1
-       : 0;
+       : 0);
      break;
     case "CreateEvent":
-     activity?.payload.ref_type === "branch"
-      ? (acc.branches = (acc.branches || 0) + 1)
-      : (acc.tags = (acc.tags || 0) + 1);
+     if (activity?.payload.ref_type === "branch") {
+      acc.branches = (acc.branches || 0) + 1;
+     } else {
+      acc.tags = (acc.tags || 0) + 1;
+     }
      break;
    }
 
    if (activity?.type) {
-    acc[activity.type] = (acc[activity.type] ?? 0) + 1;
+    acc[activity.type] = (acc[activity.type] || 0) + 1;
    }
 
    return acc;

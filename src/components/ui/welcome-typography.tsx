@@ -1,4 +1,3 @@
-import React from "react";
 import { BounceOnload } from "@/components/ui/animation";
 import { useGithub } from "@/hooks/use-github";
 import personalDataJson from "@/utils/constants/personal-data.json";
@@ -9,7 +8,7 @@ const WelcomeTypography = () => {
  return (
   <>
    <p className="block md:hidden text-sm font-bold cursor-default">
-    Hello, I'm{" "}
+    Hello, I&apos;m{" "}
    </p>
    <p className="hidden md:block text-md font-display cursor-default">A.K.A</p>
    <p className="font-display text-xl sm:text-3xl cursor-default">

@@ -19,7 +19,6 @@ import {
  SiNestjs,
  SiFirebase,
  SiSupabase,
- SiFlutter,
  SiGraphql,
  SiNpm,
  SiPhp,
@@ -41,8 +40,8 @@ import {
  SiMarkdown,
  SiPrisma,
  SiDocker,
+ type IconType,
 } from "@icons-pack/react-simple-icons";
-import { IconType } from "@icons-pack/react-simple-icons";
 
 interface IconItem {
  name: string;

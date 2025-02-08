@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { motion, useAnimation, useAnimationControls } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 
@@ -8,7 +8,7 @@ interface AllAnimationComponentProps {
 
 export const AnimationBounce = ({ children }: AllAnimationComponentProps) => {
  const controls = useAnimationControls();
- const [isPlaying, setIsPlaying] = useState(false);
+ const [isPlaying, setIsPlaying] = React.useState(false);
 
  const setBounce = () => {
   controls.start({
@@ -46,7 +46,7 @@ export const AnimationBounce = ({ children }: AllAnimationComponentProps) => {
 export const BounceOnload = ({ children }: AllAnimationComponentProps) => {
  const controls = useAnimation();
 
- useEffect(() => {
+ React.useEffect(() => {
   const onload = setTimeout(() => {
    controls.start({
     transform: [
@@ -78,7 +78,7 @@ export const BounceOnload = ({ children }: AllAnimationComponentProps) => {
 export const HeartBeat = ({ children }: AllAnimationComponentProps) => {
  const controls = useAnimation();
 
- useEffect(() => {
+ React.useEffect(() => {
   const onload = setInterval(() => {
    controls.start({
     transform: [
