@@ -22,7 +22,7 @@ const Navbar = (props: NavbarProps) => {
   if (!ref.current) return;
 
   const observer = new IntersectionObserver(([entry]) =>
-   setIsIntersecting(entry.isIntersecting),
+   setIsIntersecting(entry.isIntersecting)
   );
 
   observer.observe(ref.current);

@@ -61,7 +61,7 @@ const RecentActivity = (props: RecentActivityProps) => {
 
    return acc;
   },
-  {},
+  {}
  );
 
  const activitySummaryString = Object.keys(activitySummary)

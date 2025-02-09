@@ -28,13 +28,13 @@ const WorkExperience = (props: WorkExperienceProps) => {
     {new Date().getFullYear()},{" "}
     {Math.floor(
      (new Date().getTime() - new Date("2022-09-01").getTime()) /
-      (1000 * 60 * 60 * 24 * 365),
+      (1000 * 60 * 60 * 24 * 365)
     )}{" "}
     years{" "}
     {Math.floor(
      ((new Date().getTime() - new Date("2022-09-01").getTime()) %
       (1000 * 60 * 60 * 24 * 365)) /
-      (1000 * 60 * 60 * 24 * 30),
+      (1000 * 60 * 60 * 24 * 30)
     )}{" "}
     months experience
    </span>

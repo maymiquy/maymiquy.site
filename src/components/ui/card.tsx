@@ -29,7 +29,7 @@ export const Card: React.FC<CardProps> = ({ children, className }) => {
    onMouseMove={onMouseMove}
    className={cn(
     "overflow-hidden relative duration-700 border rounded-xl hover:bg-zinc-800/10 group md:gap-8 hover:border-zinc-400/50 border-zinc-700/50",
-    className,
+    className
    )}
   >
    <div className="pointer-events-none">
