@@ -1,35 +1,12 @@
 import { env } from "@/config/env";
 
-interface PinnedRepoNode {
- name: string;
-}
-
-interface PinnedReposResponse {
- data: {
-  user: {
-   pinnedItems: {
-    nodes: PinnedRepoNode[];
-   };
-  };
- };
-}
-
-interface DependabotAlert {
- state: string;
- security_advisory: {
-  severity: string;
- };
-}
-
-interface DependabotAlertsResponse extends Array<DependabotAlert> {}
-
 const revalidate = 60;
 const MINUTES_5 = 60 * 5;
 const HOURS_1 = 3600 * 1;
 const HOURS_12 = 3600 * 12;
 
 // User API
-export async function getUser(username: string) {
+export async function getUser(username: string): Promise<GitHubUser> {
  try {
   console.log("Fetching user data for", username);
   console.time("getUser");
@@ -42,8 +19,7 @@ export async function getUser(username: string) {
 
   return result;
  } catch (error) {
-  console.error("Error fetching user data", error);
-  return null;
+  throw new Error(`Error fetching user data: ${error}`);
  }
 }
 
@@ -68,13 +44,27 @@ export async function getSocialAccounts(username: string) {
   {
    headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
    next: { revalidate: MINUTES_5 },
-  },
+  }
  );
  console.timeEnd("getSocialAccounts");
  return res.json();
 }
 
 // Pinned repo API
+interface PinnedRepoNode {
+ name: string;
+}
+
+interface PinnedReposResponse {
+ data: {
+  user: {
+   pinnedItems: {
+    nodes: PinnedRepoNode[];
+   };
+  };
+ };
+}
+
 export async function getPinnedRepos(username: string) {
  console.log("Fetching pinned repos for", username);
  console.time("getPinnedRepos");
@@ -88,8 +78,8 @@ export async function getPinnedRepos(username: string) {
  });
  const pinned: PinnedReposResponse = await res.json();
  console.timeEnd("getPinnedRepos");
- const names = pinned.data.user.pinnedItems.nodes.map((node) => node.name);
- return names;
+ const result = pinned.data.user.pinnedItems.nodes.map((node) => node.name);
+ return result;
 }
 
 // Organization API
@@ -108,29 +98,10 @@ export const getUserOrganizations = async (username: string) => {
  return res.json();
 };
 
-// Vercel API
-export const getVercelProjects = async () => {
- if (!env.VERCEL_TOKEN) {
-  console.log("No Vercel token found - no projects will be shown.");
-  return { projects: [] };
- }
- console.log("Fetching Vercel projects");
- console.time("getVercelProjects");
- const res = await fetch(`${env.VERCEL_PROJECT_API}`, {
-  headers: { Authorization: `Bearer ${env.VERCEL_TOKEN}` },
- });
- console.timeEnd("getVercelProjects");
- if (!res.ok) {
-  console.error("Vercel API returned an error.", res.status, res.statusText);
-  return { projects: [] };
- }
- return res.json();
-};
-
 // Cache get repository package.json
 export async function getRepositoryPackageJson(
  username: string,
- reponame: string,
+ reponame: string
 ) {
  const res = await fetch(`${env.GITHUB_API}/graphql`, {
   method: "POST",
@@ -159,49 +130,82 @@ export async function getRepositoryPackageJson(
 }
 
 // Cache get recent user activity
-export const getRecentUserActivity = async (username: string) => {
+export const getRecentUserActivity = async (
+ username: string
+): Promise<RecentUserActivity[]> => {
  console.log("Fetching recent activity for", username);
  console.time("getRecentUserActivity");
  const res = await fetch(`${env.GITHUB_API}/users/${username}/events`, {
   headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
   next: { revalidate: HOURS_1 },
  });
- const response = await res.json();
  console.timeEnd("getRecentUserActivity");
- return response;
+ return res.json();
 };
 
-// Get dependabot alerts
-export const getDependabotAlerts = async (
- username: string,
- reponame: string,
-) => {
- const res = await fetch(
-  `${env.GITHUB_API}/repos/${username}/${reponame}/dependabot/alerts`,
-  {
-   headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
-   next: { revalidate: HOURS_12 },
-  },
- );
- const response: DependabotAlertsResponse = await res.json();
+// Cache get repo languages
+interface RepoLanguagesResponse {
+ data: {
+  [key: string]: {
+   name: string;
+   languages: {
+    edges: [
+     {
+      size: number;
+      node: {
+       name: string;
+       color: string;
+      };
+     },
+    ];
+   };
+  };
+ };
+}
 
- // If dependabot is not enabled, the response will be an object, not an array.
- if (!Array.isArray(response)) {
-  return [];
+export async function getRepoLanguages(
+ owner: string,
+ repoNames: string[]
+): Promise<RepoLanguagesResponse> {
+ console.time(`getRepoLanguages`);
+
+ const query = `
+    query {
+      ${repoNames
+       .map(
+        (repo, index) => `
+        repo${index}: repository(owner: "${owner}", name: "${repo}") {
+          name
+          languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
+            edges {
+              size
+              node {
+                name
+                color
+              }
+            }
+          }
+        }
+      `
+       )
+       .join("")}
+    }
+  `;
+
+ const res = await fetch(`${env.GITHUB_API}/graphql`, {
+  method: "POST",
+  headers: {
+   Authorization: `Bearer ${env.GH_TOKEN}`,
+   "Content-Type": "application/json",
+  },
+  body: JSON.stringify({ query }),
+  next: { revalidate: HOURS_12 },
+ });
+
+ if (!res.ok) {
+  throw new Error(`Error: ${res.status}`);
  }
- const openAlertsBySeverity = response.reduce(
-  (acc: Record<string, number>, alert: DependabotAlert) => {
-   if (alert.state === "open") {
-    acc[alert.security_advisory.severity] = acc[
-     alert.security_advisory.severity
-    ]
-     ? acc[alert.security_advisory.severity] + 1
-     : 1;
-   }
-   return acc;
-  },
-  {},
- );
 
- return openAlertsBySeverity;
-};
+ console.timeEnd(`getRepoLanguages`);
+ return res.json();
+}
