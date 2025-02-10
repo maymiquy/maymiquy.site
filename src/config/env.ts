@@ -11,11 +11,11 @@ const createEnv = () => {
  });
 
  const envVars = {
-  GITHUB_API: process.env.NEXT_GITHUB_API,
-  VERCEL_PROJECT_API: process.env.NEXT_VERCEL_PROJECTS_API,
-  PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
-  GH_TOKEN: process.env.NEXT_GH_TOKEN,
-  VERCEL_TOKEN: process.env.NEXT_VERCEL_TOKEN,
+  GITHUB_API: process.env.NEXT_PUBLIC_GITHUB_API,
+  VERCEL_PROJECT_API: process.env.NEXT_PUBLIC_VERCEL_PROJECTS_API,
+  PUBLIC_URL: process.env.NEXT_PUBLIC_APP_URL,
+  GH_TOKEN: process.env.NEXT_PUBLIC_GH_TOKEN,
+  VERCEL_TOKEN: process.env.NEXT_PUBLIC_VERCEL_TOKEN,
  };
 
  const parsedEnv = EnvSchema.safeParse(envVars);
@@ -27,7 +27,7 @@ const createEnv = () => {
   ${Object.entries(parsedEnv.error.flatten().fieldErrors)
    .map(([k, v]) => `- ${k}: ${v}`)
    .join("\n")}
-  `,
+  `
   );
  }
 
