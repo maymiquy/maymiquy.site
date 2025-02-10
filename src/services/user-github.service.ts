@@ -167,8 +167,6 @@ export async function getRepoLanguages(
  owner: string,
  repoNames: string[]
 ): Promise<RepoLanguagesResponse> {
- console.time(`getRepoLanguages`);
-
  const query = `
     query {
       ${repoNames
@@ -206,6 +204,5 @@ export async function getRepoLanguages(
   throw new Error(`Error: ${res.status}`);
  }
 
- console.timeEnd(`getRepoLanguages`);
  return res.json();
 }
