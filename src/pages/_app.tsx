@@ -1,5 +1,3 @@
-import React from "react";
-
 import type { AppProps } from "next/app";
 
 import "@/styles/globals.css";
@@ -12,6 +10,8 @@ export default function App({ Component, pageProps }: AppProps) {
   <GithubProvider
    user={pageProps.user}
    recentUserActivity={pageProps.recentUserActivity}
+   pinnedRepo={pageProps.pinnedRepo}
+   repo={pageProps.repo}
   >
    <NextTopLoader
     color="#ffff"

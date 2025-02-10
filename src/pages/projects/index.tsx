@@ -1,35 +1,47 @@
-import React from "react";
-import { GetStaticProps } from "next";
+import { type GetStaticProps } from "next";
 import customDataJson from "@/utils/constants/personal-data.json";
-import { getRecentUserActivity } from "@/services/user-github.service";
+import {
+ getPinnedRepos,
+ getRecentUserActivity,
+ getRepos,
+} from "@/services/user-github.service";
 
 import CommonLayout from "@/layouts/common-layout";
 import Header from "@/components/features/projects/header";
+import ProjectList from "@/components/features/projects/project-list";
 
-type Props = {};
-
-const ProjectsPage = (props: Props) => {
+const ProjectsPage = () => {
  return (
   <CommonLayout title="Projects">
-   <section className="mx-auto w-full flex flex-col mt-10 lg:mt-0 justify-center items-center">
+   <section className="mx-auto w-full flex flex-col justify-center items-center">
     <Header />
+    <div className="pt-16 mx-auto space-y-8 relative md:space-y-12">
+     <ProjectList />
+    </div>
    </section>
   </CommonLayout>
  );
 };
 
-export default ProjectsPage;
-
 export const getStaticProps = (async () => {
  console.log("Revalidating data...");
- const recentUserActivity: RecentUserActivity =
-  (await getRecentUserActivity(customDataJson.githubUsername)) || [];
+ const [recentUserActivity, pinnedRepo, repo] = await Promise.all([
+  getRecentUserActivity(customDataJson.githubUsername),
+  getPinnedRepos(customDataJson.githubUsername),
+  getRepos(customDataJson.githubUsername),
+ ]);
  return {
   props: {
-   recentUserActivity,
+   recentUserActivity: recentUserActivity || [],
+   pinnedRepo: pinnedRepo || [],
+   repo: repo || [],
   },
   revalidate: 60 * 30,
  };
 }) satisfies GetStaticProps<{
- recentUserActivity: RecentUserActivity;
+ recentUserActivity: RecentUserActivity[];
+ pinnedRepo: any;
+ repo: any;
 }>;
+
+export default ProjectsPage;
