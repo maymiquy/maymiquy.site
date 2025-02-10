@@ -139,7 +139,7 @@ const LanguagesBadge = (props: LanguagesBadgeProps) => {
      repoLanguages.map((lang: any, index: number) => (
       <div
        key={index}
-       className="h-full rounded-lg"
+       className="h-full"
        style={{
         width: `${(lang.size / totalSize) * 100}%`,
         backgroundColor: lang.node.color,
