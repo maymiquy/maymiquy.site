@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { ArrowLeftIcon } from "@primer/octicons-react";
+import { ArrowLeft } from "lucide-react";
 
 type MenuItems = {
  title: string;
@@ -55,7 +55,7 @@ const Navbar = (props: NavbarProps) => {
      <Link
       href="/"
       className="text-zinc-200 hover:text-zinc-100 hover:scale-110 duration-700"
-      children={<ArrowLeftIcon className="w-6 h-6" />}
+      children={<ArrowLeft className="w-4 h-4 sm:w-6 sm:h-6" />}
      />
     </div>
    </nav>
