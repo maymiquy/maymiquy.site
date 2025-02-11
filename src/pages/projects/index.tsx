@@ -13,11 +13,9 @@ import ProjectList from "@/components/features/projects/project-list";
 const ProjectsPage = () => {
  return (
   <CommonLayout title="Projects">
-   <section className="mx-auto w-full flex flex-col justify-center items-center">
+   <section className="mx-auto w-full flex flex-col justify-center items-center mt-10 lg:mt-0">
     <Header />
-    <div className="pt-16 mx-auto space-y-8 relative md:space-y-12">
-     <ProjectList />
-    </div>
+    <ProjectList />
    </section>
   </CommonLayout>
  );

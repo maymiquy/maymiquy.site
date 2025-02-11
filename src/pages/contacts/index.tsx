@@ -7,21 +7,23 @@ const ContactPage = () => {
  const router = useRouter();
  return (
   <HomeLayout>
-   <div className="max-w-md w-full space-y-8 text-center px-4 mx-auto">
+   <div className="max-w-md w-full space-y-8 text-center mx-auto px-12 sm:px-4">
     <div>
      <h1 className="font-extrabold text-white tracking-tight">
-      <span className="block text-4xl">Opps,</span>
-      <span className="inline text-3xl">Page Under Maintenance</span>
+      <span className="block text-2xl sm:text-4xl">Opps,</span>
+      <span className="inline text-xl sm:text-3xl">Under Maintenance</span>
      </h1>
-     <p className="mt-3 text-sm font-sans text-gray-300 sm:mt-5">
+     <p className="mt-3 text-xs sm:text-sm font-sans text-gray-300 sm:mt-5">
       Currently working on adding improvements to this page.
      </p>
-     <p className="text-sm font-sans text-gray-300">Please check back soon!</p>
+     <p className="text-xs sm:text-sm font-sans text-gray-300">
+      Please check back soon!
+     </p>
     </div>
     <div className="mt-8 flex justify-center">
      <button
       onClick={() => router.back()}
-      className="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-semibold rounded-md text-white bg-zinc-600 hover:bg-zinc-700"
+      className="w-auto inline-flex items-center justify-center px-4 py-2 border border-transparent text-xs sm:text-sm font-semibold rounded-md text-white bg-zinc-600 hover:bg-zinc-700"
      >
       Return Back
      </button>
@@ -32,19 +34,19 @@ const ContactPage = () => {
      <div className="flex-grow border-t border-gray-700"></div>
     </div>
     <div>
-     <p className="text-sm font-sans text-gray-300 mb-4">
+     <p className="text-xs sm:text-sm font-sans text-gray-300 mb-4">
       If you have any business inquiries, please don't hesitate to contact me
       directly:
      </p>
      <a
       href="mailto:miqhambali@gmail.com"
-      className="w-full sm:w-auto inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-semibold rounded-md text-zinc-900 bg-white hover:bg-zinc-200"
+      className="w-auto inline-flex items-center justify-center px-4 py-2 border border-transparent text-xs sm:text-sm font-semibold rounded-md text-zinc-900 bg-white hover:bg-zinc-200"
      >
       Contact me
      </a>
     </div>
     <div className="mt-8">
-     <p className="text-sm text-gray-400">
+     <p className="text-xs sm:text-sm text-gray-400">
       Expected completion: <time dateTime="2025-02-29">Feb 29, 2025</time>
      </p>
     </div>

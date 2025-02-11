@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { SiGithub } from "@icons-pack/react-simple-icons";
-import { StarIcon } from "@primer/octicons-react";
+import { Star } from "lucide-react";
 import LanguagesBadge from "./languages-badge";
 
 type ProjectArticleProps = {
@@ -24,7 +24,7 @@ const ProjectArticle = (props: ProjectArticleProps) => {
      title="Total stars."
      className="text-zinc-300/70 text-sm flex flex-row items-center gap-2 "
     >
-     <StarIcon className="w-4 h-4" />{" "}
+     <Star className="w-4 h-4" />{" "}
      {Intl.NumberFormat("en-US", { notation: "compact" }).format(
       props.project.stargazers_count
      )}
@@ -52,7 +52,7 @@ const ProjectArticle = (props: ProjectArticleProps) => {
      <Link
       href={props.project.html_url}
       target="_blank"
-      className="hover:text-zinc-300/30 duration-200 align-middle flex items-center gap-1 -tracking-widest"
+      className="hover:text-zinc-300/30 duration-200 align-middle flex items-center gap-1 tracking-tight"
      >
       <SiGithub className="w-4 h-4" />
       View project repository

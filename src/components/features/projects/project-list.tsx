@@ -22,7 +22,7 @@ const ProjectList = () => {
  const chunkSize = Math.ceil(sorted.length / 3);
 
  return (
-  <>
+  <div className="pt-8 md:pt-12 mx-auto space-y-8 relative md:space-y-12">
    {pinned.length ? (
     <>
      <div className="grid grid-cols-1 gap-8 mx-auto lg:grid-cols-2 ">
@@ -75,7 +75,7 @@ const ProjectList = () => {
      ))}
     </div>
    </div>
-  </>
+  </div>
  );
 };
 
