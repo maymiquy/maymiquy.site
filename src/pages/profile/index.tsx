@@ -1,4 +1,3 @@
-import React from "react";
 import { getUser } from "@/services/user-github.service";
 import customDataJson from "@/utils/constants/personal-data.json";
 
@@ -28,7 +27,6 @@ const ProfilePage = () => {
 export default ProfilePage;
 
 export const getStaticProps = (async () => {
- console.log("Revalidating data...");
  const user: GitHubUser = (await getUser(customDataJson.githubUsername)) || [];
  return { props: { user }, revalidate: 60 * 30 };
 }) satisfies GetStaticProps<{

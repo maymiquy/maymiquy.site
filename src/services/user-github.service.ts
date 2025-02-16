@@ -8,7 +8,6 @@ const HOURS_12 = 3600 * 12;
 // User API
 export async function getUser(username: string): Promise<GitHubUser> {
  try {
-  console.log("Fetching user data for", username);
   console.time("getUser");
   const res = await fetch(`${env.GITHUB_API}/users/${username}`, {
    headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
@@ -24,8 +23,7 @@ export async function getUser(username: string): Promise<GitHubUser> {
 }
 
 // Repo API
-export async function getRepos(username: string) {
- console.log("Fetching repos for", username);
+export async function getRepos(username: string): Promise<GitHubRepository[]> {
  console.time("getRepos");
  const res = await fetch(`${env.GITHUB_API}/users/${username}/repos`, {
   headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
@@ -37,7 +35,6 @@ export async function getRepos(username: string) {
 
 // Social integrated with GitHub API
 export async function getSocialAccounts(username: string) {
- console.log("Fetching social accounts for", username);
  console.time("getSocialAccounts");
  const res = await fetch(
   `${env.GITHUB_API}/users/${username}/social_accounts`,
@@ -50,23 +47,7 @@ export async function getSocialAccounts(username: string) {
  return res.json();
 }
 
-// Pinned repo API
-interface PinnedRepoNode {
- name: string;
-}
-
-interface PinnedReposResponse {
- data: {
-  user: {
-   pinnedItems: {
-    nodes: PinnedRepoNode[];
-   };
-  };
- };
-}
-
-export async function getPinnedRepos(username: string) {
- console.log("Fetching pinned repos for", username);
+export async function getPinnedRepos(username: string): Promise<string[]> {
  console.time("getPinnedRepos");
  const res = await fetch(`${env.GITHUB_API}/graphql`, {
   method: "POST",
@@ -84,7 +65,6 @@ export async function getPinnedRepos(username: string) {
 
 // Organization API
 export const getUserOrganizations = async (username: string) => {
- console.log("Fetching organizations for", username);
  console.time("getUserOrganizations");
  const res = await fetch(`${env.GITHUB_API}/graphql`, {
   method: "POST",
@@ -124,8 +104,7 @@ export async function getRepositoryPackageJson(
   const packageJson = JSON.parse(response.data.repository.object.text);
   return packageJson;
  } catch (error) {
-  console.error("Error parsing package.json", error);
-  return {};
+  throw new Error(`Error parsing package.json: ${error}`);
  }
 }
 
@@ -133,7 +112,6 @@ export async function getRepositoryPackageJson(
 export const getRecentUserActivity = async (
  username: string
 ): Promise<RecentUserActivity[]> => {
- console.log("Fetching recent activity for", username);
  console.time("getRecentUserActivity");
  const res = await fetch(`${env.GITHUB_API}/users/${username}/events`, {
   headers: { Authorization: `Bearer ${env.GH_TOKEN}` },
