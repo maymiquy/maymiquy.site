@@ -36,9 +36,11 @@ const eslintConfig = [
       }],
       "no-unused-vars": "error",
       "semi": ["error", "always"],
-      "no-empty-object-type": "off",
+      "@typescript-eslint/no-empty-object-type": "off",
       "react/no-children-prop": "off",
       "react-hooks/exhaustive-deps": "off",
+      "@typescript-eslint/no-explicit-any": "error",
+      "no-console": "warn"
     },
   },
 ];

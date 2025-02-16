@@ -10,9 +10,6 @@ const nextConfig = {
       }
     ],
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   experimental: {
     optimizePackageImports: [
       "@icons-pack/react-simple-icons",
