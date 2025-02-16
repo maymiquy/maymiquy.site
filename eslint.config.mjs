@@ -40,7 +40,10 @@ const eslintConfig = [
       "react/no-children-prop": "off",
       "react-hooks/exhaustive-deps": "off",
       "@typescript-eslint/no-explicit-any": "error",
-      "no-console": "warn"
+      "no-console": [
+        "warn",
+        { "allow": ["info", "time", "timeEnd"] }
+      ]
     },
   },
 ];
