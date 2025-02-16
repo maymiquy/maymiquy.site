@@ -3,8 +3,8 @@ import React from "react";
 type GithubContextType = {
  user: GitHubUser;
  recentUserActivity: RecentUserActivity[];
- pinnedRepo: any;
- repo: any;
+ pinnedRepo: string[];
+ repo: GitHubRepository[];
 };
 
 export const GithubContext = React.createContext<GithubContextType | undefined>(

@@ -1,6 +1,7 @@
 import React from "react";
 import { getRepoLanguages } from "@/services/user-github.service";
 import {
+ type IconType,
  SiC,
  SiCmake,
  SiCplusplus,
@@ -20,11 +21,13 @@ import {
 } from "@icons-pack/react-simple-icons";
 
 type LanguagesBadgeProps = {
- project: any;
+ project: GitHubRepository;
 };
 
+interface RepoLanguages extends Array<RepoLanguage> {}
+
 const LanguagesBadge = (props: LanguagesBadgeProps) => {
- const [repoLanguages, setRepoLanguages] = React.useState<any>(null);
+ const [repoLanguages, setRepoLanguages] = React.useState<RepoLanguages>([]);
  const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
  React.useEffect(() => {
@@ -51,7 +54,7 @@ const LanguagesBadge = (props: LanguagesBadgeProps) => {
  }
 
  const totalSize = repoLanguages.reduce(
-  (acc: number, lang: any) => acc + lang.size,
+  (acc: number, lang: RepoLanguage) => acc + lang.size,
   0
  );
 
@@ -59,8 +62,8 @@ const LanguagesBadge = (props: LanguagesBadgeProps) => {
   <div className="flex flex-col min-w-[80px] gap-2 p-1 float-right my-6">
    <div className="flex flex-row justify-center gap-2">
     {repoLanguages &&
-     repoLanguages.map((lang: any, index: number) => {
-      let LanguageIcon;
+     repoLanguages.map((lang: RepoLanguage, index: number) => {
+      let LanguageIcon: IconType;
       const language = lang.node.name;
       const color = lang.node.color;
 
@@ -136,7 +139,7 @@ const LanguagesBadge = (props: LanguagesBadgeProps) => {
    </div>
    <div className="h-1 w-full bg-gray-200 rounded-full overflow-hidden">
     {repoLanguages &&
-     repoLanguages.map((lang: any, index: number) => (
+     repoLanguages.map((lang: RepoLanguage, index: number) => (
       <div
        key={index}
        className="h-full"

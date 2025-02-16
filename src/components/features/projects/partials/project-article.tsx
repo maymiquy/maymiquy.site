@@ -4,7 +4,7 @@ import { Star } from "lucide-react";
 import LanguagesBadge from "./languages-badge";
 
 type ProjectArticleProps = {
- project: any;
+ project: GitHubRepository;
 };
 
 const ProjectArticle = (props: ProjectArticleProps) => {

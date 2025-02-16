@@ -6,15 +6,15 @@ import { chunk } from "lodash";
 const ProjectList = () => {
  const { pinnedRepo, repo } = useGithub();
 
- const pinned = repo.filter((item: any) => pinnedRepo.includes(item.name));
+ const pinned = repo.filter((item) => pinnedRepo.includes(item.name));
 
  const sorted = repo
-  .filter((item: any) => !item.private)
-  .filter((item: any) => !item.fork)
-  .filter((item: any) => !item.archived)
-  .filter((item: any) => !pinnedRepo.includes(item.name))
+  .filter((item) => !item.private)
+  .filter((item) => !item.fork)
+  .filter((item) => !item.archived)
+  .filter((item) => !pinnedRepo.includes(item.name))
   .sort(
-   (a: any, b: any) =>
+   (a, b) =>
     new Date(b.updated_at ?? Number.POSITIVE_INFINITY).getTime() -
     new Date(a.updated_at ?? Number.POSITIVE_INFINITY).getTime()
   );
@@ -54,21 +54,21 @@ const ProjectList = () => {
    ) : null}
    <div className="grid grid-cols-1 gap-4 mx-auto lg:mx-0 lg:grid-cols-3">
     <div className="grid grid-cols-1 space-y-2 lg:space-x-2 gap-4">
-     {chunk(sorted, chunkSize)[0]?.map((project: any) => (
+     {chunk(sorted, chunkSize)[0]?.map((project) => (
       <Card key={project.name}>
        <ProjectArticle project={project} />
       </Card>
      ))}
     </div>
     <div className="grid grid-cols-1 space-y-2 lg:space-x-2 gap-4">
-     {chunk(sorted, chunkSize)[1]?.map((project: any) => (
+     {chunk(sorted, chunkSize)[1]?.map((project) => (
       <Card key={project.name}>
        <ProjectArticle project={project} />
       </Card>
      ))}
     </div>
     <div className="grid grid-cols-1 space-y-2 lg:space-x-2 gap-4">
-     {chunk(sorted, chunkSize)[2]?.map((project: any) => (
+     {chunk(sorted, chunkSize)[2]?.map((project) => (
       <Card key={project.name}>
        <ProjectArticle project={project} />
       </Card>

@@ -22,8 +22,11 @@ const ProjectsPage = () => {
 };
 
 export const getStaticProps = (async () => {
- console.log("Revalidating data...");
- const [recentUserActivity, pinnedRepo, repo] = await Promise.all([
+ const [recentUserActivity, pinnedRepo, repo]: [
+  RecentUserActivity[],
+  string[],
+  GitHubRepository[],
+ ] = await Promise.all([
   getRecentUserActivity(customDataJson.githubUsername),
   getPinnedRepos(customDataJson.githubUsername),
   getRepos(customDataJson.githubUsername),
@@ -38,8 +41,8 @@ export const getStaticProps = (async () => {
  };
 }) satisfies GetStaticProps<{
  recentUserActivity: RecentUserActivity[];
- pinnedRepo: any;
- repo: any;
+ pinnedRepo: string[];
+ repo: GitHubRepository[];
 }>;
 
 export default ProjectsPage;
