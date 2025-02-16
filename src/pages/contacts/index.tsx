@@ -35,8 +35,8 @@ const ContactPage = () => {
     </div>
     <div>
      <p className="text-xs sm:text-sm font-sans text-gray-300 mb-4">
-      If you have any business inquiries, please don't hesitate to contact me
-      directly:
+      If you have any business inquiries, please don&apos;t hesitate to contact
+      me directly:
      </p>
      <a
       href="mailto:miqhambali@gmail.com"
