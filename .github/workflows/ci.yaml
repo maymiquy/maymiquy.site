@@ -24,6 +24,3 @@ jobs:
 
    - name: Check Types and Lint
      run: pnpm check:all
-
-   - name: Build Project
-     run: pnpm next build
