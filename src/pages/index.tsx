@@ -1,10 +1,10 @@
-import React from "react";
 import { getUser } from "@/services/user-github.service";
 import customDataJson from "@/utils/constants/personal-data.json";
 import { menu } from "@/utils/constants/menu";
 
 import HomeLayout from "@/layouts/home-layout";
 import { WelcomeNavigation, WelcomeSection } from "@/components/features/home";
+import { GetServerSideProps } from "next";
 
 const HomePage = () => {
  return (
@@ -17,11 +17,11 @@ const HomePage = () => {
 
 export default HomePage;
 
-export async function getStaticProps() {
+export const getServerSideProps = (async () => {
  const user: GitHubUser = (await getUser(customDataJson.githubUsername)) || [];
  return {
   props: {
    user,
   },
  };
-}
+}) satisfies GetServerSideProps<{ user: GitHubUser }>;
