@@ -33,11 +33,7 @@ const SEO = ({ title, description, keywords, image }: SEOProps) => {
    <meta name="og:image:width" property="og:image:width" content="1920" />
    <meta name="og:image:height" property="og:image:height" content="1080" />
    <meta name="og:url" property="og:url" content={`${env.PUBLIC_URL}`} />
-   <meta
-    name="og:site_name"
-    property="og:site_name"
-    content="www.maymiquy.cloud"
-   />
+   <meta name="og:site_name" property="og:site_name" content="Miqdam Hambali" />
    <meta name="og:type" property="og:type" content="website" />
    <meta name="og:locale" property="og:locale" content="en-US" />
    <meta name="twitter:card" property="twitter:card" content="summary" />
